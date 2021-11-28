@@ -1,3 +1,5 @@
+node_modules
+.env
 twilio_sms.php
 # Logs
 logs
