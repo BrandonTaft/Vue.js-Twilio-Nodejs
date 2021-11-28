@@ -1,5 +1,8 @@
 node_modules
+<<<<<<< HEAD
 .env
+=======
+>>>>>>> 067a499800ecd6a35c64692ec2b06fa3bd70bc67
 twilio_sms.php
 # Logs
 logs
