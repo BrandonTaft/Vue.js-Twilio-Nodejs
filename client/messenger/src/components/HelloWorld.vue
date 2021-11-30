@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-4 offset-md-4">
           <div class="card p-4">
-            <h1>Twilio App</h1>
+            <h2>Messenger</h2>
             <form @submit.prevent="sendMessage">
               <div class="form-group">
                 <label for="Number">Enter Phone Number</label>
@@ -60,7 +60,7 @@ export default {
       this.loading = true;
       try {
         let response = await axios.post(
-          "http://localhost:3000/send-message",
+          "http://localhost:1337/send-message",
           this.message
         );
         console.log(response);
