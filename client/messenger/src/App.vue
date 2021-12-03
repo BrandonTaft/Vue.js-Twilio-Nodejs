@@ -2,16 +2,19 @@
   <div id="app">
     
     <HelloWorld/>
+    <Reminders/>
   </div>
+  
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-
+import Reminders from './components/Reminders.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    Reminders
   }
 }
 </script>

@@ -9,96 +9,23 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
-const MongoClient = require('mongodb').MongoClient
-
+const { MongoClient } = require('mongodb');
 
 require('dotenv').config()
 const client = require("twilio")(accountSid, authToken);
 
-
 app.use(cors());
+
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(bodyParser.json());
 
-
-
-//***********CONNECT TO DATABASE****************
-
-const url = process.env.DATABASE_URL;
-
-MongoClient.connect(url, {
-  useUnifiedTopology: true
-})
-  .then(client => {
-    console.log('Connected to Database')
-    const db = client.db('MyDB')
-    const reminders = db.collection('Reminders')
-    
-
- //********************GET ALL REMINDERS*******************//
-
- app.get('/api/reminders', (req, res) => {
-  db.collection('Reminders').find().toArray()
-    .then(reminders => {
-      res.json(reminders)
-    })
-    .catch(/* ... */)
-})
-
-//********************ADD REMINDERS*******************//
-
-app.post('/api/addreminders', (req, res) => {
-  reminders.insertOne(req.body)
-    .then(result => {
-      res.json({success: true})
-    })
-    .catch(error => console.error(error))
-})
-  
-// app.post('/api/addreminders', async(req, res) => {
-//   reminders.insertOne({
-//     name: req.body.name,
-//     priority: req.body.priority,
-//     date: req.body.date
-//   })
-//     .then(res.redirect('/'))
-//     .catch(error => console.error(error))
-// })
-//await createReminder(client,
-  //   {
-  //     name: "Check Email",
-  //     priority: "High",
-  //     date: 11 / 30 / 21
-  //   }
-  // );
-
-  //async function createReminder(client, newReminder) {
-    //   const result = await client.db("MyDB").collection("Reminders").insertOne(newReminder);
-    //   console.log(`New listing created with the following id: ${result.insertedId}`);
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  })
-  
-
-  
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: "Hey"
+  });
+});
 
 app.post("/send-message", async (req, res) => {
   try {
@@ -132,15 +59,15 @@ app.post('/sms', (req, res) => {
 
 async function main() {
 
+  const uri = "mongodb+srv://Brandon:Zxcvbnm13579@checklist.za5qv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  
 
-
-
-  const client = new MongoClient(url, {
+  const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
 
-
+  
 
   try {
     // Connect to the MongoDB cluster
@@ -149,13 +76,13 @@ async function main() {
     // Make the appropriate DB calls
     await listDatabases(client);
     await listReminders(client);
-    //await createReminder(client,
-    //   {
-    //     name: "Check Email",
-    //     priority: "High",
-    //     date: 11 / 30 / 21
-    //   }
-    // );
+    await createReminder(client,
+      {
+        name: "Check Email",
+        priority: "High",
+        date: 11 / 30 / 21
+      }
+    );
 
     await findOneReminderByName(client, "Check Email");
 
@@ -177,10 +104,10 @@ async function listDatabases(client) {
 };
 
 
-// async function createReminder(client, newReminder) {
-//   const result = await client.db("MyDB").collection("Reminders").insertOne(newReminder);
-//   console.log(`New listing created with the following id: ${result.insertedId}`);
-// }
+async function createReminder(client, newReminder) {
+  const result = await client.db("MyDB").collection("Reminders").insertOne(newReminder);
+  console.log(`New listing created with the following id: ${result.insertedId}`);
+}
 
 async function findOneReminderByName(client, nameOfReminder) {
   const result = await client.db("MyDB").collection("Reminders").findOne({ name: nameOfReminder });
@@ -199,7 +126,7 @@ async function findOneReminderByName(client, nameOfReminder) {
 
 async function listReminders(client) {
   reminderList = await client.db("MyDB").collection("Reminders").find();
-
+  
   console.log("The Reminders:");
   reminderList.forEach(db => console.log(` - ${db.name}`));
 };
