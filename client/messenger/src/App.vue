@@ -1,25 +1,29 @@
 <template>
-  <div id="app">
-    
-    <HelloWorld/>
-    <Reminders/>
+  <div class="container">
+    <div class="row vertical-centre justify-content-center mt-50">
+      <div class="col-md-6 mx-auto">
+        <AddReminder></AddReminder>
+        <Reminders></Reminders>
   </div>
-  
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import Reminders from './components/Reminders.vue'
+import AddReminder from './components/AddReminder.vue'
+import Reminders from './components/Reminders'
+
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    AddReminder,
     Reminders
   }
 }
 </script>
 
 <style>
+
 @import './assets/styles/main.css';
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

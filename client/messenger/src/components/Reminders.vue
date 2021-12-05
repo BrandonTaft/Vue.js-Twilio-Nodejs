@@ -7,11 +7,11 @@
             <h2>Reminders</h2>
          
         
-            <form @submit.prevent="addReminder">
+            <form @submit.prevent="getReminders">
               <div class="form-group">
-                <label for="addReminder">Name Your Reminder</label>
+                <label for="getReminders">Name Your Reminder</label>
                 <input
-                  v-model="reminder"
+                  v-model="reminder._id"
                   type="text"
                   class="form-control"
                   
@@ -20,9 +20,9 @@
               </div>
               
               <div class="form-group">
-                <label for="addReminder">Enter Your Description</label>
+                <label for="getReminders">Enter Your Description</label>
                 <input
-                  v-model="reminder"
+                  v-model="reminder.priority"
                   class="form-control"
                   type="text"
                 />
@@ -35,12 +35,13 @@
         </div>
       </div>
     </div>
-    <div>{{ reminder }}</div>
-            <div>{{ reminder}}</div>
+    <div>{{ reminder._id }}</div>
+            <div>{{ reminder.priority}}</div>
     
   </section>
 </template>
 <script>
+
 
 
 import axios from "axios";
@@ -54,17 +55,24 @@ export default {
       loading: false
     };
   },
-  created() {
-   
-    axios.get("http://localhost:1337/api/reminders").then(response => {
-      this.reminder = response.data.data;
-    });
-  },
+
+  
   methods: {
     
+
+
+mounted() {
+   
+    axios.get("http://localhost:1337/api/reminders").then(response => {
+      this.reminder = response.data;
+    });
+  },
+
+    
     getReminders() {
-        axios.get("http://localhost:1337/api/reminders").then((res) =>{ 
-            this.reminder = res.data;
+        axios.get("http://localhost:1337/api/reminders").then(response =>{ 
+            this.reminder = response.data;
+            console.log(response.data)
         })
     } 
     ,
