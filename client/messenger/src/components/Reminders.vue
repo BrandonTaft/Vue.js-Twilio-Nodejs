@@ -7,7 +7,7 @@
             <h2>Reminders</h2>
          
         
-            <form @submit.prevent="getReminders">
+            <form @submit.prevent="addReminder">
               <div class="form-group">
                 <label for="getReminders">Name Your Reminder</label>
                 <input

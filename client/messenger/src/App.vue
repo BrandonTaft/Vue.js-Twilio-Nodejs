@@ -4,6 +4,7 @@
       <div class="col-md-6 mx-auto">
         <AddReminder></AddReminder>
         <Reminders></Reminders>
+        <ListTodo></ListTodo>
   </div>
     </div>
   </div>
@@ -12,12 +13,14 @@
 <script>
 import AddReminder from './components/AddReminder.vue'
 import Reminders from './components/Reminders'
+import ListTodo from "./components/ListTodo.vue";
 
 export default {
   name: 'App',
   components: {
     AddReminder,
-    Reminders
+    Reminders,
+    ListTodo
   }
 }
 </script>
