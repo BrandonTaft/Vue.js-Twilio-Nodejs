@@ -2,7 +2,7 @@
   <section>
     <div class="container">
       <div class="row">
-        <div class="col-md-4 offset-md-4">
+        <div class="col-md-4 offset-md-4" id="messenger">
           <div class="card p-4">
             <h2>Messenger</h2>
             <form @submit.prevent="sendMessage">
@@ -60,7 +60,7 @@ export default {
       this.loading = true;
       try {
         let response = await axios.post(
-          "http://localhost:1337/send-message",
+          "http://localhost:3000/send-message",
           this.message
         );
         console.log(response);

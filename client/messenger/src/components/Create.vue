@@ -1,6 +1,6 @@
 <template>
   <div class="col align-self-center">
-    <h3 class="pb-5 text-left underline">Create todos</h3>
+    <h3 class="pb-5 text-left underline">Create Reminder</h3>
     <form class="sign-in" @submit.prevent>
       <div class="form-group todo__row">
         <input
@@ -19,7 +19,7 @@
 <script>
  // eslint-disable-next-line no-unused-vars
 import axios from "axios";
-import bus from "./../bus.js";
+import bus from "../bus.js";
 
 export default {
   data() {
@@ -38,6 +38,7 @@ export default {
       console.log(todo);
       this.$http
         .post("/", todo)
+        // eslint-disable-next-line no-unused-vars
         .then(response => {
           this.clearTodo();
           this.refreshTodo();

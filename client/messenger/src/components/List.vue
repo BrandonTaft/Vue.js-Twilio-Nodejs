@@ -2,7 +2,7 @@
 
   <div v-bind:show="todos.length>0" class="col align-self-center">
       
-    <div class="form-row align-items-center" v-for="(todo) in todos" :key="todo">
+    <div class="form-row align-items-center" v-for="(todo, index) in todos" :key="index">
       <div class="col-auto my-1">
         <div class="input-group mb-3 todo__row">
           <div class="input-group-prepend">
@@ -43,14 +43,14 @@
     <div
       class="alert alert-primary todo__row"
       v-show="todos.length==0 && doneLoading"
-    >Hardest worker in the room. No more todos now you can rest. ;)</div>
+    > No more Reminders ;)</div>
   </div>
 </template>
 
 <script>
 // eslint-disable-next-line no-unused-vars
 import axios from "axios";
-import bus from "./../bus.js";
+import bus from "../bus.js";
 
 export default {
   data() {
