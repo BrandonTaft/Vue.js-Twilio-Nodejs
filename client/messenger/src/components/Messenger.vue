@@ -18,14 +18,14 @@
               </div>
               <div class="form-group">
                 <label for="Number">Enter Message</label>
-                <textarea
+                <input
                   v-model="message.message"
                   class="form-control"
                   id
                   cols="30"
                   rows="10"
                   required
-                ></textarea>
+                />
               </div>
               <button type="submit" class="btn btn-primary">
                 <span

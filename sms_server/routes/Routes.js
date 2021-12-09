@@ -97,11 +97,5 @@ app.post('/sms', (req, res) => {
   //res.writeHead(200, { 'Content-Type': 'text/xml' });
   //res.end(twiml.toString());
 });
-// app.post('/', (req, res) => {
-//   const { name } = req.body;
-//   repository.create(name).then((reminder) => {
-//     res.json(reminder);
-//   }).catch((error) => console.log(error));
-// });
 
 module.exports = app;
