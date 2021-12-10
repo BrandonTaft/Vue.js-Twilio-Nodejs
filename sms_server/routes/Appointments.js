@@ -1,102 +1,114 @@
 'use strict';
-
 const express = require('express');
-const momentTimeZone = require('moment-timezone');
+const router = express.Router();
 const moment = require('moment');
 const Appointment = require('../models/Appointment');
-
+const repository = require('../repositories/AppointmentRepository');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
+const bodyParser = require("body-parser");
+const client = require("twilio")(accountSid, authToken);
+require('dotenv').config()
 /* eslint-disable new-cap */
-const router = express.Router();
 
-const getTimeZones = function() {
-  return momentTimeZone.tz.names();
-};
 
-// GET: /appointments
-router.get('/appointments', function(req, res, next) {
-  Appointment.find().then(function(appointments) {
-    res.json( { appointments: appointments });
-  });
+//********************* Middleware *********************//
+
+router.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+router.use(bodyParser.json());
+
+
+//*********** Get All Items From The Database ***********//
+
+router.get('/', function (req, res, next) {
+  repository.findAll().then(function (appointments) {
+    res.json(appointments);
+  }).catch((error) => console.log(error));
 });
 
-// GET: /appointments/create
-router.get('/create', function(req, res, next) {
-  res.json( {
-    timeZones: getTimeZones(),
-    appointment: new Appointment({
-      name: '',
-      phoneNumber: '',
-      notification: '',
-      timeZone: '',
-      time: '',
-    }),
-  });
-});
 
-// POST: /appointments
-router.post('/appointments', function(req, res, next) {
+//************* Add Items To The Database **************//
+
+router.post('/', function (req, res, next) {
   const name = req.body.name;
-  const phoneNumber = req.body.phoneNumber;
   const notification = req.body.notification;
-
   const time = moment(req.body.time, 'YYYY-MM-DD hh:mma');
-
   const appointment = new Appointment({
-      
     name: name,
-    phoneNumber: phoneNumber,
-    notification: Number(notification),
-    timeZone: "US/Eastern",
-    time: time,
-  });
-  appointment.save().then(function() {
-    res.redirect('/appointments/appointments');
+    notification: parseInt(notification)
+  })
+
+  appointment.save().then(function () {
+    res.redirect('/');
     console.log(appointment);
-  });
+  }).catch((error) => console.log(error));
 });
 
-// GET: /appointments/:id/edit
-router.get('/:id/edit', function(req, res, next) {
-  const id = req.params.id;
-  Appointment.findOne({ _id: id }).then(function(appointment) {
-    res.json('appointments/edit', {
-      timeZones: getTimeZones(),
-      appointment: appointment,
-    });
-  });
+
+//*********** Update Items In The Database *************//
+
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const reminder = { name: req.body.name, done: req.body.done };
+  repository.updateById(id, reminder)
+    .then(res.status(200).json([]))
+    .catch((error) => console.log(error));
 });
 
-// POST: /appointments/:id/edit
-router.post('/:id/edit', function(req, res, next) {
-  const id = req.params.id;
-  const name = req.body.name;
-  const phoneNumber = req.body.phoneNumber;
-  const notification = req.body.notification;
-  const timeZone = req.body.timeZone;
-  const time = moment(req.body.time, 'YYYY-MM-DD hh:mma');
 
-  Appointment.findOne({ _id: id }).then(function(appointment) {
-    appointment.name = name;
-    appointment.phoneNumber = phoneNumber;
-    appointment.notification = notification;
-    appointment.timeZone = timeZone;
-    appointment.time = time;
+//*********** Delete Item From The Database *************//
 
-    appointment.save().then(function() {
-      //res.redirect('/');
-      console.log("post/:id/edit")
-    });
-  });
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  repository.deleteById(id).then((ok) => {
+    console.log(ok);
+    console.log(`Deleted record with id: ${id}`);
+    res.status(200).json([]);
+  }).catch((error) => console.log(error));
 });
 
-// POST: /appointments/:id/delete
-router.post('/:id/delete', function(req, res, next) {
-  const id = req.params.id;
 
-  Appointment.remove({ _id: id }).then(function() {
-     //res.redirect('/');
-     console.log("remove")
-  });
+//****************** Deliver Message *******************//
+
+router.post("/send-message", async (req, res) => {
+  try {
+    let response = await client.messages.create({
+      body: req.body.message,
+      from: phoneNumber,
+      to: req.body.to
+    })
+
+    res.status(200).json({
+      response: response,
+      message: `Message Sent To ${req.body.to}`
+    })
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      Error: err
+    })
+  }
+})
+
+
+//******* Recieve Message And Send Auto Response ********//
+
+router.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+  console.log(req.body.Body)
+  //twiml.message('LEAVE ME ALONE');
+  const name = req.body.Body;
+  repository.create(name).then((reminder) => {
+    res.json(reminder);
+  }).catch((error) => console.log(error));
+  //res.writeHead(200, { 'Content-Type': 'text/xml' });
+  //res.end(twiml.toString());
 });
+
 
 module.exports = router;

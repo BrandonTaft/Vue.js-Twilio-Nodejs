@@ -7,7 +7,8 @@ const notifications = require('./notifications');
  
 function start() {
   new CronJob(
-    '0 * * * *', // run every minute
+      '0 * * * *', // run every hour
+    //'00 * * * * *', // test - run every minute
     () => {
       const time = new Date();
       const currentTime = time.getHours();
@@ -19,7 +20,7 @@ function start() {
     },
     null, // don't run anything after finishing the job
     true, // start the timer
-    '' // use default timezone
+    'America/New_York' // timezone
   );
 }
 

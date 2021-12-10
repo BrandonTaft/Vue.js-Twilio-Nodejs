@@ -4,7 +4,7 @@
       
     <div class="form-row align-items-center" v-for="(todo, index) in todos" :key="index">
       <div class="col-auto my-1">
-        <div class="input-group mb-3 todo__row">
+        <div class="item">
           <div class="input-group-prepend">
             <span class="input-group-text">
               <input
@@ -30,11 +30,12 @@
             <div class="input-group-text">
               <span
                 class="input-group-addon addon-left"
-                title="Delete todo?"
+                title="Delete Reminder?"
                 v-on:click="deleteTodo(todo._id)"
               >
                 X
               </span>
+              
             </div>
           </div>
         </div>
@@ -44,6 +45,7 @@
       class="alert alert-primary todo__row"
       v-show="todos.length==0 && doneLoading"
     > No more Reminders ;)</div>
+    
   </div>
 </template>
 
@@ -73,8 +75,9 @@ export default {
     }
   },
   methods: {
+
     fetchTodo() {
-      this.$http.get("/").then(response => {
+      this.$http.get("http://127.0.0.1:3000/").then(response => {
         this.todos = response.data;
       });
     },
@@ -82,7 +85,7 @@ export default {
     updateTodo(todo) {
       let id = todo._id;
       this.$http
-        .put(`/${id}`, todo)
+        .put(`http://127.0.0.1:3000/${id}`, todo)
         .then(response => {
           console.log(response);
         })
@@ -93,7 +96,7 @@ export default {
 
     deleteTodo(id) {
         // eslint-disable-next-line no-unused-vars
-      this.$http.delete(`/${id}`).then(response => {
+      this.$http.delete(`http://127.0.0.1:3000/${id}`).then(response => {
         this.fetchTodo();
       });
     },

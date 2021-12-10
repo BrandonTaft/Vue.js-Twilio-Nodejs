@@ -2,8 +2,8 @@
   <section>
     <div class="container">
       <div class="row">
-        <div class="col-md-4 offset-md-4" id="messenger">
-          <div class="card p-4">
+        <div  id="messenger">
+          <div >
             <h2>Messenger</h2>
             <form @submit.prevent="sendMessage">
               <div class="form-group">
@@ -35,6 +35,7 @@
                   aria-hidden="true"
                 ></span>Send
               </button>
+              
             </form>
           </div>
         </div>

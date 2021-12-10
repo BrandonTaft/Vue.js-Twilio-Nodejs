@@ -36,9 +36,10 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.locals.moment = require('moment');
-app.use('/reminders', routes);
-app.use('/', routes);
-app.use('/appointments', appointments);
+//app.use('/reminders', routes);
+//app.use('/', routes);
+//app.use('/appointments', appointments);
+app.use('/', appointments);
 
 //******Catch 404 Errors And Forward To Error Handler*****//
 

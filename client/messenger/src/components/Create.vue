@@ -11,6 +11,14 @@
           v-model="name"
           @keyup.enter="addTodo($event)"
         />
+        <input
+          type="text"
+          class="form-control"
+          @keypress="typing=true"
+          placeholder="when?"
+          v-model="notification"
+          @keyup.enter="addTodo($event)"
+        />
         <small class="form-text text-muted" v-show="typing">Hit enter to save</small>
       </div>
     </form>
@@ -25,6 +33,7 @@ export default {
   data() {
     return {
       name: "",
+      notification: "",
       typing: false
     };
   },
@@ -33,11 +42,12 @@ export default {
       if (event) event.preventDefault();
       let todo = {
         name: this.name,
+        notification: this.notification,
         done: false //false by default
       };
       console.log(todo);
       this.$http
-        .post("/", todo)
+        .post("http://127.0.0.1:3000/", todo)
         // eslint-disable-next-line no-unused-vars
         .then(response => {
           this.clearTodo();
@@ -51,6 +61,7 @@ export default {
 
     clearTodo() {
       this.name = "";
+      this.notification = "" ;
     },
 
     refreshTodo() {
