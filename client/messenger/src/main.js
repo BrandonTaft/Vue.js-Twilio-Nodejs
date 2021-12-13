@@ -2,7 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import Sms from './Sms.vue'
 import axios from 'axios';
-import "./assets/styles/main.css"
+import "./assets/styles/main.css";
+import 'animate.css';
 
 const http = axios.create({
   baseURL: process.env.BACKEND_URL ? process.env.BACKEND_URL : "http://localhost:3000/reminders",
@@ -11,6 +12,7 @@ const http = axios.create({
 
 Vue.prototype.$http = http;
 Vue.config.productionTip = false
+
 
 new Vue({
   render: h => h(App),

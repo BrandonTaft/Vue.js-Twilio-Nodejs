@@ -1,47 +1,38 @@
 <template>
-  <section>
-    <div class="container">
-      <div class="row">
-        <div  id="messenger">
-          <div >
-            <h2>Messenger</h2>
-            <form @submit.prevent="sendMessage">
-              <div class="form-group">
-                <label for="Number">Enter Phone Number</label>
-                <input
-                  v-model="message.to"
-                  type="text"
-                  placeholder="080********"
-                  class="form-control"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="Number">Enter Message</label>
-                <input
-                  v-model="message.message"
-                  class="form-control"
-                  id
-                  cols="30"
-                  rows="10"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">
-                <span
-                  v-if="loading"
+  <div class="back-container">
+    <h2 class="back-title">Send Text</h2>
+    <form @submit.prevent="sendMessage">
+      <div class="input-container">
+        <input
+          v-model="message.to"
+          type="text"
+          placeholder=""
+          class="form-control"
+          required
+        />
+        <label for="Number">Enter Phone Number</label>
+      </div>
+      <br />
+      <div class="input-container">
+        <textarea
+          type="text"
+          v-model="message.message"
+          class="form-control"
+          required
+        />
+        <label for="Number">Enter Message</label>
+      </div>
+      <button type="submit" class="btn">
+        <span
+          v-if="loading"
                   class="spinner-grow spinner-grow-sm"
                   role="status"
                   aria-hidden="true"
-                ></span>Send
-              </button>
-              
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        ></span
+        >Send
+      </button>
+    </form>
+  </div>
 </template>
 <script>
 import swal from "sweetalert";
@@ -51,9 +42,9 @@ export default {
     return {
       message: {
         to: "",
-        message: ""
+        message: "",
       },
-      loading: false
+      loading: false,
     };
   },
   methods: {
@@ -67,12 +58,17 @@ export default {
         console.log(response);
         swal("Success", response.data.message, "success");
         this.loading = false;
+        this.clearTodo();
       } catch (err) {
         swal("Error", "Something Went Wrong", "error");
         this.loading = false;
         console.log(err);
       }
-    }
-  }
+    },
+    clearTodo() {
+      this.message.to = "";
+      this.message.message = "" ;
+    },
+  },
 };
 </script>

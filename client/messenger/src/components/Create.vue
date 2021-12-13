@@ -1,26 +1,40 @@
 <template>
-  <div class="col align-self-center">
-    <h3 class="pb-5 text-left underline">Create Reminder</h3>
-    <form class="sign-in" @submit.prevent>
-      <div class="form-group todo__row">
+  <div class="back-container">
+    <h2 class="back-title">Create Reminder</h2>
+   
+    <form  @submit.prevent="addTodo">
+      <div class="input-container">
         <input
           type="text"
+          placeholder=""
           class="form-control"
           @keypress="typing=true"
-          placeholder="What do you want to do?"
+          required
           v-model="name"
-          @keyup.enter="addTodo($event)"
+          
         />
+        <label >Title</label>
+      </div>
+      <br />
+      <div class="input-container2">
         <input
-          type="text"
+          type="time"
+          placeholder=""
           class="form-control"
           @keypress="typing=true"
-          placeholder="when?"
+          
           v-model="notification"
-          @keyup.enter="addTodo($event)"
+          
         />
-        <small class="form-text text-muted" v-show="typing">Hit enter to save</small>
+        <label >Set Reminder</label>
+       
       </div>
+      <button type="submit" class="btn " >
+                <span
+                  role="status"
+                  aria-hidden="true"
+                ></span>Submit
+              </button>    
     </form>
   </div>
 </template>
@@ -66,7 +80,8 @@ export default {
 
     refreshTodo() {
       bus.$emit("refreshTodo");
-    }
+    },
+    
   }
 };
 </script>

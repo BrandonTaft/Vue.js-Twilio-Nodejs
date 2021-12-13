@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 const config = require('./config/Config');
-const routes = require('./routes/Routes');
 const appointments = require('./routes/Appointments');
 const app = express();
 
@@ -36,9 +35,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.locals.moment = require('moment');
-//app.use('/reminders', routes);
-//app.use('/', routes);
-//app.use('/appointments', appointments);
 app.use('/', appointments);
 
 //******Catch 404 Errors And Forward To Error Handler*****//
@@ -57,20 +53,8 @@ app.use(function(err, req, res, next) {
     console.error(err);
   }
 
-//   res.status(err.status || 500);
-//   res.json('error', {
-//     message: err.message,
-//     error: {},
-//   });
 });
 
   
-
-  
-
-
-
-
-
 
 module.exports = app;

@@ -1,4 +1,4 @@
-
+/* class="animate__animated animate__lightSpeedOutRight animate__slower	4s animate__infinite	infinite" */
 
 html { 
   background: url(/bg2.jpg) no-repeat center center fixed; 
@@ -9,8 +9,7 @@ html {
   height: 100%;
 }
 
-body { 
-  
+body {   
   height: 70%;
   width: 60%;
   margin: auto;
@@ -18,23 +17,14 @@ body {
   margin-bottom: 10%;
 }
 
-.container{
-  display: flex;
-  justify-content: center;
-}
-
-.item{
-  display: flex;
-}
-
 .main-container{
   position: absolute;
-  width: 250px;
-  height: 320px;
   background: none;
+  width: 80%;
+  height: 80%;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);  
 }
 
 .card{
@@ -43,85 +33,396 @@ body {
   height: 100%;
   transform-style: preserve-3d;
   transition: all 0.8s ease;
-}
-
-
-
-.front{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: url(/bg.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  color: black;
-  text-align: center;
-}
-
-.back{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: url(/bg.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  color: white;
-  text-align: center;
-  transform: rotateY(180deg);
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  justify-content: center; 
 }
 
 .flipCard{
   transform: rotateY(180deg);
 }
 
-/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
-/* .flip-card {
-  background-color: transparent;
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f1f1f1;
-  perspective: 1000px; //Remove this if you don't want the 3D effect 
-} */
+#flip-btn{
+  position: fixed;
+  z-index: 1;
+  top: 14%;
+  right: 44%;
+}
 
-/* This container is needed to position the front and back side */
-/* .flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-} */
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
-/* .flip-card .flip-card-inner {
-  transform: rotateY(180deg);
-} */
+.btn{
+	color:#fff;
+	background-color:#e74c3c;
+	outline: none;
+  border: 0;
+  color: #fff;
+	padding:10px 20px;
+	text-transform:uppercase;
+	margin-top:50px;
+	border-radius:2px;
+	cursor:pointer;
+	position:relative;
+}
 
-/* Position the front and back side */
-/* .flip-card-front, .flip-card-back {
+.btn:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+/******************** FRONT **********************/
+
+.front{
   position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari 
+  width: 70%;
+  height: fit-content;
+  min-height: 100%;
   backface-visibility: hidden;
-} */
+  background: none;
+  color: rgb(185, 191, 240);
+  text-align: center;
+  display: block;
+  background: black;
+  border-radius: 10%;
+  margin: 0;
+  background: radial-gradient(circle at 100px 100px, #d6dce2, #000); 
+}
 
-/* Style the front side (fallback if image is missing) */
-/* .flip-card-front {
-  background-color: #bbb;
-  color: black;
-} */
+.title{
+  color: rgb(43, 42, 42);
+  font-size: 50px;
+  margin-bottom: 13%;
+}
+.item{
+  display: flex;
+  justify-content: center;
+  margin: 5%;
+}
 
-/* Style the back side */
-/* .flip-card-back {
-  background-color: dodgerblue;
+.check{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #787373;
+}
+
+/* On mouse-over, add a grey background color */
+.check:hover input ~ .checkmark {
+  background-color: rgb(66, 64, 64);
+}
+
+/* When the checkbox is checked, add a blue background */
+.check input:checked ~ .checkmark {
+  background-color: black;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.check input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.check .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: large;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 105%;
+}
+
+.check:hover .tooltiptext {
+  visibility: visible;
+}
+
+.update-text{
+  visibility: hidden;
+  background: none;
+  color:#e74c3c;
+  text-align: center;
+  font-size: large;
+  position: absolute;
+  z-index: 1;
+  bottom: 105%;
+  right: 60%;
+}
+
+.for-tip:hover .update-text{
+  visibility: visible;
+}
+
+#add{
+  position: absolute;
+  z-index: 1;
+  top: 16%;
+  right: 35%;
+  font-size: x-large;
+  color:#e74c3c;
+}
+
+.action-button{
+	position: relative;
+	padding: 1px 10px;
+  cursor:pointer;
+  float: left;
+	border-radius: 10px;
+	font-size: large;
+	color: slategray;
+	text-decoration: none;	
+  background-color: black;
+	border-bottom: 2px solid slategrey;	
+}
+
+.action-button:active{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+
+/******************** BACK **********************/
+
+.back{
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: none;
   color: white;
+  text-align: center;
   transform: rotateY(180deg);
-} */
+  display: block;
+  background: black;
+  border-radius: 10%;
+  margin: 0;
+  background: radial-gradient(circle at 100px 100px, #83828578, #000);
+}
+
+.sms-container{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25%;
+}
+
+.back-container{
+  margin-left: 8%;
+  margin-right: 10%;
+}
+
+.back-title{
+  margin:0;
+  margin-bottom: 25%;
+}
+
+.form-control{
+  position: relative;
+  width: 85%;
+  height: fit-content;
+  background: none;
+  border: none;
+  color: black;
+  font-size: x-large; 
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.input-container{
+	position:relative;
+	margin-bottom:25px;
+}
+
+.input-container ::placeholder{
+	position:absolute;
+	top:0px;
+	left:0px;
+	font-size:16px;
+	color:#fff;	
+  pointer-event:none;
+	transition: all 0.5s ease-in-out;
+}
+
+.input-container label{
+	position:absolute;
+	top:0px;
+	left:0px;
+	font-size:16px;
+	color:#fff;	
+  pointer-event:none;
+	transition: all 0.5s ease-in-out;
+}
+
+.input-container input{ 
+  border:0;
+  border-bottom:1px solid #555;  
+  background:transparent;
+  width:100%;
+  padding:8px 0 5px 0;
+  font-size:16px;
+  color:#fff;
+}
+
+.input-container textarea{ 
+  border:0;
+  border-bottom:1px solid #555;  
+  background:transparent;
+  width:100%;
+  padding:8px 0 5px 0;
+  font-size:16px;
+  color:#fff;
+}
+
+.input-container input:focus{ 
+  border:none;	
+  outline:none;
+  border-bottom:1px solid #e74c3c;	
+}
+
+.input-container textarea:focus{ 
+  border:none;	
+  outline:none;
+  border-bottom:1px solid #e74c3c;	
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label{
+	top:-20px;	
+}
+
+.input-container textarea:focus ~ label,
+.input-container textarea:valid ~ label{
+	top:-20px;	
+}
+
+.input-container2{
+	position:relative;
+	margin-bottom:25px;
+}
+
+.input-container2 ::placeholder{
+	position:absolute;
+	top:0px;
+	left:0px;
+	font-size:16px;
+	color:#fff;	
+  pointer-event:none;
+	transition: all 0.5s ease-in-out;
+}
+
+.input-container2 label{
+	position:absolute;
+	top:-20px;
+	left:0px;
+	font-size:16px;
+	color:#fff;	
+  pointer-event:none;
+	transition: all 0.5s ease-in-out;
+}
+
+.input-container2 input{ 
+  border:0;
+  border-bottom:1px solid #555;  
+  background:transparent;
+  width:100%;
+  padding:8px 0 5px 0;
+  font-size:16px;
+  color:#fff;
+}
+
+.input-container2 textarea{ 
+  border:0;
+  border-bottom:1px solid #555;  
+  background:transparent;
+  width:100%;
+  padding:8px 0 5px 0;
+  font-size:16px;
+  color:#fff;
+}
+
+.input-container2 input:focus{ 
+  border:none;	
+  outline:none;
+  border-bottom:1px solid #e74c3c;	
+}
+
+.input-container2 textarea:focus{ 
+  border:none;	
+  outline:none;
+  border-bottom:1px solid #e74c3c;	
+}
+
+.input-container2 input:focus ~ label,
+.input-container2 input:invalid ~ label{
+	top:-20px;
+}
+
+.input-container2 textarea:focus ~ label,
+.input-container2 textarea:invalid ~ label{
+	top:-20px;
+}
+
+#over{
+  position: absolute;
+  z-index: 1;
+  top: 15%;
+  right: 39%;
+  font-size: x-large;
+  color: white;
+}
+
