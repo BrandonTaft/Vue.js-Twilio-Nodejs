@@ -10,7 +10,7 @@ Twilio Programmable SMS also allows the user to send in a notification through t
    
 <div align='center'>
   <h3>Built With</h3>
-  <h3 align="center">Animate &nbsp;Axios&nbsp; Bootstrap &nbsp;Sweetalert&nbsp; Vue.js&nbsp; Node-Cron&nbsp; Express MongoDB&nbsp; Twilio&nbsp; Node.js</h3>
+  <h3 align="center">Animate &nbsp;Axios&nbsp; Bootstrap &nbsp;Sweetalert&nbsp; Vue.js&nbsp; Node-Cron&nbsp; Express&nbsp; MongoDB&nbsp; Twilio&nbsp; Node.js</h3>
    <br></br>
   
   <a href="https://www.linkedin.com/in/brandonmtaft">
