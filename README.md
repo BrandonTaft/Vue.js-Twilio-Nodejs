@@ -1,4 +1,4 @@
-<h2 align='center'>Full stack Reminder App Built With &nbsp Vue.js, &nbsp Node.js  &nbspand &nbsp Twilio's SMS API</h2>
+<h2 align='center'> Reminder App Built With &nbsp Vue.js, &nbsp Node.js  &nbspand &nbsp Twilio's SMS API</h2>
 
 <p align='center'>This Reminder app lets users create a dynamic checklist that will notify you about specific tasks at any given time. Once a task is added to the list it is stored in a database and can be marked as done, deleted or edited with a click of a mouse. It integrates with Twilio to send a notification text at a pre-set time. Node-Cron is utilized to run a background scheduled function to check for any notifications that are due, then sends them to the specified phone number. The scheduler can be set to any time increments the user wants.
   
