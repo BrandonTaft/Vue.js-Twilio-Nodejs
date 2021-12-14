@@ -263,12 +263,19 @@ body {
 
 .back-container{
   margin-left: 8%;
-  margin-right: 10%;
+  margin-right: 6%;
+  margin-top: 5%;
 }
 
 .back-title{
   margin:0;
   margin-bottom: 25%;
+}
+
+.message-title{
+  margin:0;
+  margin-bottom: 20%;
+  margin-right: 21%;
 }
 
 .form-control{
