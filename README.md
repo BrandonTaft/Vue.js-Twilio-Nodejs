@@ -1,8 +1,48 @@
 <h2 align='center'>Full stack Reminder App Built With &nbsp Vue.js, &nbsp Node.js  &nbspand &nbsp Twilio's SMS API</h2>
-<br />
-<br />
-<br />
 
+<p align='center'>This Reminder app lets users create a dynamic checklist that will notify you about specific tasks at any given time. Once a task is added to the list it is stored in a database and can be marked as done, deleted or edited with a click of a mouse. It integrates with Twilio to send a notification text at a pre-set time. Node-Cron is utilized to run a background scheduled function to check for any notifications that are due, then sends them to the specified phone number. The scheduler can be set to any time increments the user wants.
+  
+Twilio Programmable SMS also allows the user to send in a notification through text message. Once it recieves the text it stores the data in the database and displays it in the checklist. The recipient of the notification also has the ability to reply to the text, which can also be stored in the database. 
+  </p>
+  <h1></h1>
+
+
+   
+<div align='center'>
+  <h3>Built With</h3>
+  <h3 align="center">Animate &nbsp;Axios&nbsp; Bootstrap &nbsp;Sweetalert&nbsp; Vue.js&nbsp; Node-Cron&nbsp; Express MongoDB&nbsp; Twilio&nbsp; Node.js</h3>
+   <br></br>
+  
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/javascript-original.svg" />
+  </a>  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/bootstrap-original.svg" />
+  </a>&nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/css3-original.svg" />
+  </a>&nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/html5-original.svg"     />
+  </a>&nbsp;&nbsp;&nbsp;
+  <br></br>
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/nodejs-original.svg" />
+  </a>&nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/mongo.png" />
+  </a>
+   <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/Vue.png" />
+  </a>&nbsp;&nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/twilio.png" />
+  </a>&nbsp;&nbsp;&nbsp;
+  </div>
+  
+  <br />
+<br />
+<br />
 <h3> Edit and Update Reminders on the Fly </h3>
 <h1></h1>
 
