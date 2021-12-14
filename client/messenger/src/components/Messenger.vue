@@ -1,6 +1,6 @@
 <template>
   <div class="back-container">
-    <h2 class="back-title">Send Text</h2>
+    <h2 class="back-title">Send A Message</h2>
     <form @submit.prevent="sendMessage">
       <div class="input-container">
         <input
