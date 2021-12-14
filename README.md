@@ -94,4 +94,18 @@ https://user-images.githubusercontent.com/86688411/146044177-6449f9c5-f3b8-442a-
 
 https://user-images.githubusercontent.com/86688411/146045435-9967e5d8-5dfb-4df8-9e0a-5494dd84d40c.mp4
 
+<br />
+<br />
+  <h3 align='center'><a align='center' href="https://brandontaft.net" >Check It Out In My Portfolio</a></h3>
+   <h3 align="center">Thank You For Stopping By!</h3> 
+<p align='center'>For enquiries or empolyment oppurtunities, please reach out at <a href="mailto:btaftcan@gmail.com">btaftcan@gmail.com</a> or over on <a href="https://www.linkedin.com/in/brandonmtaft">LinkedIn</a>.</p>
+
+ ## Connect With Me
+
+<p align="center">
+  <a  href="https://brandontaft.net"><img height="30" src="https://img.shields.io/badge/-My Portfolio-3423A6?style=flat-square&logo=Google-Chrome&logoColor=white" /></a>
+<a href="https://www.linkedin.com/in/brandonmtaft"><img height="30" src="https://img.shields.io/badge/-Brandon Taft-0077B5?style=flat-square&logo=Linkedin&logoColor=white"/></a>
+<a href="mailto:btaftcan@gmail.com"><img height="30" src="https://img.shields.io/badge/-btaftcan@gmail.com-D14836?style=flat-square&logo=Gmail&logoColor=white"/></a>
+ <a  href="https://brandontaft.github.io"><img height="30" src="https://img.shields.io/badge/-brandontaft.github.io-3423A6?style=flat-square&logo=Google-Chrome&logoColor=white" /></a>
+</p>
 
