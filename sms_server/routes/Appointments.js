@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-const router = express.Router();
+const session = require('express-session');
 const moment = require('moment');
 const Appointment = require('../models/Appointment');
 const repository = require('../repositories/AppointmentRepository');
@@ -15,13 +15,13 @@ require('dotenv').config()
 
 
 //********************* Middleware *********************//
-
+const router = express.Router();
 router.use(bodyParser.urlencoded({
   extended: false
 }));
 
 router.use(bodyParser.json());
-
+router.use(session({ secret: 'SECRETKEY' }));
 
 //*********** Get All Items From The Database ***********//
 
@@ -99,15 +99,24 @@ router.post("/send-message", async (req, res) => {
 //******* Recieve Message And Send Auto Response ********//
 
 router.post('/sms', (req, res) => {
+  const smsCount = req.session.counter || 0;
+  let message = 'OK, Got It';
+  if(smsCount > 0) {
+    message = `OK, this is Reminder #${smsCount + 1}`;
+  }
+  req.session.counter = smsCount + 1;
+  
+  //Creates The Auto Response Message
   const twiml = new MessagingResponse();
-  console.log(req.body.Body)
-  //twiml.message('LEAVE ME ALONE');
+  twiml.message(message);
+
+  //Extracts the data from the incoming text
+  //Then Creates MongoDB Document
   const name = req.body.Body;
-  repository.create(name).then((reminder) => {
-    res.json(reminder);
+  repository.create(name).then(() => {
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.end(twiml.toString());
   }).catch((error) => console.log(error));
-  //res.writeHead(200, { 'Content-Type': 'text/xml' });
-  //res.end(twiml.toString());
 });
 
 
