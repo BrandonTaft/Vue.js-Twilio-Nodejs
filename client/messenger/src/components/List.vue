@@ -1,14 +1,17 @@
 <template>
   <div v-bind:show="todos.length > 0">
     <h1 class="title">Checklist</h1>
+    
     <button
-        class="action-button animate red"
+        class="refresh-btn animate"
         title="Delete Reminder?"
         v-on:click="refreshTodo()"
       >
-        refresh
+        REFRESH
       </button>
+ 
       <br/>
+      <div class="mom">
     <div class="item" v-for="(todo, index) in todos" :key="index">
       
       <label class="check">
@@ -43,6 +46,7 @@
         Delete
       </button>
     </div>
+      </div>
     <div
       class="alert alert-primary todo__row"
       v-show="todos.length == 0 && doneLoading"
@@ -117,32 +121,3 @@ export default {
 };
 </script>
 
-<style>
-.todo__done {
-  text-decoration: 3px line-through red !important;
-}
-
-.no_border_left_right {
-  border-left: 0px;
-  border-right: 0px;
-}
-
-.flat_form {
-  border-radius: 0px;
-}
-
-.mrb-10 {
-  margin-bottom: 10px;
-}
-
-.addon-left {
-  background-color: none !important;
-  border-left: 0px !important;
-  cursor: pointer !important;
-}
-
-.addon-right {
-  background-color: none !important;
-  border-right: 0px !important;
-}
-</style>

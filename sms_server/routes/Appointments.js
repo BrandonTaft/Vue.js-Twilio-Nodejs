@@ -99,14 +99,18 @@ router.post("/send-message", async (req, res) => {
 //******* Recieve Message And Send Auto Response ********//
 
 router.post('/sms', (req, res) => {
+  //Creates a session to track number of texts from user
   const smsCount = req.session.counter || 0;
+  //Sets the reply message on the first text from the user
   let message = 'OK, Got It';
+  //Sets the reply for each subsequent text
   if(smsCount > 0) {
     message = `OK, this is Reminder #${smsCount + 1}`;
   }
+  //Updates  the session
   req.session.counter = smsCount + 1;
   
-  //Creates The Auto Response Message
+  //Creates and sends the Auto Response with the reply message
   const twiml = new MessagingResponse();
   twiml.message(message);
 

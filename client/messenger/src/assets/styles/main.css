@@ -80,31 +80,46 @@ body {
 
 /******************** FRONT **********************/
 
+  
 .front{
-  position: absolute;
-  width: 70%;
+  width: 100%;
   height: fit-content;
-  min-height: 100%;
   backface-visibility: hidden;
   background: none;
   color: rgb(185, 191, 240);
-  text-align: center;
-  display: block;
-  background: black;
-  border-radius: 10%;
-  margin: 0;
-  background: radial-gradient(circle at 100px 100px, #d6dce2, #000); 
+  border-radius: 5%;
+  background: silver; 
 }
 
 .title{
   color: rgb(43, 42, 42);
   font-size: 50px;
   margin-bottom: 13%;
+  text-align: center;
 }
+
+.refresh-btn{
+  margin-left: 2%;
+  background: none;
+  border: none;
+  color: blue;
+  font-size: larger;
+}
+
+.mom:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .item{
+  width: 48%;
+  float: left;
   display: flex;
   justify-content: center;
-  margin: 5%;
+  margin: 3%;
+  margin-left: 1%;
+  margin-right: 1%;
 }
 
 .check{
@@ -223,7 +238,6 @@ body {
 	position: relative;
 	padding: 1px 10px;
   cursor:pointer;
-  float: left;
 	border-radius: 10px;
 	font-size: large;
 	color: slategray;
@@ -236,6 +250,10 @@ body {
 	transform: translate(0px,5px);
   -webkit-transform: translate(0px,5px);
 	border-bottom: 1px solid;
+}
+
+.todo__done {
+  text-decoration: 3px line-through red !important;
 }
 
 /******************** BACK **********************/
@@ -286,9 +304,16 @@ body {
   background: none;
   border: none;
   color: black;
-  font-size: x-large; 
+  font-size: larger; 
   word-wrap: break-word;
   word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.form-control:hover{
+overflow: visible;
 }
 
 .input-container{
