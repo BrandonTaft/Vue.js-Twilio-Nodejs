@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
 
-
-
-// Defines schema for Appointments
+// Create collection of Appointments
 const Schema = new mongoose.Schema({
   name: {
     type: String,
