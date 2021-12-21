@@ -1,24 +1,27 @@
 'use strict';
-
+const repository = require('../repositories/AppointmentRepository');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 //***********USE TWILIO NODE HELPER LIBRARY TO EASILY CREATE RESPONSES********* */
 
 
-var MessagingResponse = require('twilio').twiml.MessagingResponse,
-  _ = require('underscore');
-
 // Create response for when no results are found
-var notFound = function(req,res) {
+var tryAgain = function () {
   var resp = new MessagingResponse();
-  resp.message('We did not find the Reminder you\'re looking for');
+  resp.message('I think you forgot something!');
   return resp;
+};
+
+// If no results are found create a new reminder
+function notFound(body) {
+  var name = body;
+  repository.create(name);
+  return name
 }
-   
 
-// Sets Response for when we find a single match for the query
-// Response includes list of the matching reminder's names
-// Along with incrementing number the user uses to make their selection 
-
-var singleReminder = function(reminder) {
+// Sets Response for when we do find a match for the query
+// Response includes the matching reminder's name, notification time and if its complete or not
+var singleReminder = function (reminder) {
+  console.log(reminder)
   var resp = new MessagingResponse();
   var message = resp.message();
   message.body(`${reminder.name}\n${reminder.notification}\n${reminder.done}`);
@@ -26,22 +29,8 @@ var singleReminder = function(reminder) {
   return resp;
 };
 
-// Sets Response for when we find a multiple matches
-// Response includes the contact info including a photo, 
-// Which makes the response an MMS
-
-var multipleReminders = function(reminders) {
-  var resp = new MessagingResponse();
-  var optionsMessage = _.reduce(reminders, function(memo, it) {
-    return memo += `\n${it.option} for ${it.name}`;
-  }, '');
-
-  resp.message(`We found reminders, reply with:${optionsMessage}\nOr start over`);
-  return resp;
-};
+module.exports.tryAgain = tryAgain;
 
 module.exports.notFound = notFound;
 
 module.exports.singleReminder = singleReminder;
-
-module.exports.multipleReminders = multipleReminders;
