@@ -33,7 +33,12 @@ class AppointmentRepository {
   //update Appointment
   updateById(id, object) {
     const query = { _id: id };
-    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done } });
+    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done, notification: object.notification } });
+  }
+
+  updateByName(name, object) {
+    const query = { name: name };
+    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done, notification: object.notification } });
   }
 }
 

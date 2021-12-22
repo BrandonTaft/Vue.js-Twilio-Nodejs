@@ -9,8 +9,7 @@ var findByName = function (body, callback) {
     name: {
       $regex: body, $options: "i"
     }
-
-  }, callback).sort("name");
+  }, callback);
 };
 
 

@@ -21,13 +21,17 @@ function notFound(body) {
 // Sets Response for when we do find a match for the query
 // Response includes the matching reminder's name, notification time and if its complete or not
 var singleReminder = function (reminder) {
-  console.log(reminder)
   var resp = new MessagingResponse();
   var message = resp.message();
-  message.body(`${reminder.name}\n${reminder.notification}\n${reminder.done}`);
+  message.body(
+  `${reminder.name}\n${reminder.notification}\n${reminder.done} 
+  Reply 
+  1 Delete 
+  2 Mark As Done
+  3 Add Notification`);
   //message.media(reminder.imageUrl);
   return resp;
-};
+}
 
 module.exports.tryAgain = tryAgain;
 
