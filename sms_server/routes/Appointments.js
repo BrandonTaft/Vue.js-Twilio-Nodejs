@@ -59,12 +59,34 @@ router.post('/', function (req, res, next) {
 });
 
 
-//*********** Update Items In The Database *************//
+//*********** Update Item In The Database *************//
 
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const reminder = { name: req.body.name, done: req.body.done };
     repository.updateById(id, reminder)
+        .then(res.status(200).json([]))
+        .catch((error) => console.log(error));
+});
+
+
+//*********** Set Reminder Priority *************//
+
+router.put('/priority/:id', (req, res) => {
+    const { id } = req.params;
+    const reminder = { priority: req.body.priority };
+    repository.setPriority(id, reminder)
+        .then(res.status(200).json([]))
+        .catch((error) => console.log(error));
+});
+
+
+
+//*********** Update All Items In Db / Mark All As Incomplete/ E.O.D. Refresh *************//
+
+router.put('/', (req, res) => {
+    const reminder = { done: false };
+    repository.updateAll()
         .then(res.status(200).json([]))
         .catch((error) => console.log(error));
 });

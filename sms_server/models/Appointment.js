@@ -21,6 +21,9 @@ const Schema = new mongoose.Schema({
   done: {
     type: Boolean,
   },
+  priority:{
+    type: String,
+  },
 });
 
 const Appointment = mongoose.model('Appointment', Schema);

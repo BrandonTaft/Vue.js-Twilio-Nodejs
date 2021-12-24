@@ -86,7 +86,6 @@ body {
   height: fit-content;
   backface-visibility: hidden;
   background: none;
-  color: rgb(185, 191, 240);
   border-radius: 5%;
   background: silver; 
 }
@@ -133,6 +132,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  color: #000;
 }
 
 /* Hide the browser's default checkbox */
@@ -223,6 +223,81 @@ body {
 .for-tip:hover .update-text{
   visibility: visible;
 }
+
+.priority{
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown{
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.priority:hover .dropdown {
+  display: block;
+}
+
+/* .priority{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #000;
+} */
+
+/* Hide the browser's default checkbox */
+/* .priority input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+} */
+
+/* On mouse-over, add a grey background color */
+/* .priority:hover input ~ .checkmark {
+  background-color: rgb(66, 64, 64);
+} */
+
+/* When the checkbox is checked, add a blue background */
+/* .priority input:checked ~ .checkmark {
+  background-color: black;
+} */
+
+/* Show the checkmark when checked */
+/* .priority input:checked ~ .checkmark:after {
+  display: block;
+} */
+
+/* Style the checkmark/indicator */
+/* .priority .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.priority:hover .tooltiptext {
+  visibility: visible;
+} */
+
 
 #add{
   display: none;
