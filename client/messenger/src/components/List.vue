@@ -17,14 +17,40 @@
     >
       Clear Marks
     </button>
-    <button
-      class="refresh-btn animate"
-      title="Sort Reminders"
-      v-on:click="sortTodo()"
-    >
-      Sort
-    </button>
 
+    <div class="dropdown">
+      <span>Sort By:</span>
+      <div class="dropdown-content">
+        <button
+          class="refresh-btn animate"
+          title="Sort Reminders"
+          v-on:click="sortByHiPriority()"
+        >
+          Priority (Hi - Lo)
+        </button>
+        <button
+          class="refresh-btn animate"
+          title="Sort Reminders"
+          v-on:click="sortByLoPriority()"
+        >
+          Priority (Lo - Hi)
+        </button>
+        <button
+          class="refresh-btn animate"
+          title="Sort Reminders"
+          v-on:click="sortByAToZ()"
+        >
+          Name (A-Z)
+        </button>
+        <button
+          class="refresh-btn animate"
+          title="Sort Reminders"
+          v-on:click="sortByZToA()"
+        >
+          Name (Z - A)
+        </button>
+      </div>
+    </div>
     <br />
     <div class="mom">
       <div class="item" v-for="(todo, index) in todos" :key="index">
@@ -52,6 +78,12 @@
           />
           <span class="update-text">Update Reminder</span>
         </label>
+      <div class="dropdown">
+        <span>Clock Icon</span>
+        <div class="dropdown-content">
+          {{todo.notification}}
+          </div>
+        </div>
         <label for="priority"></label>
         <select
           v-model="todo.priority"
@@ -126,44 +158,36 @@ export default {
   methods: {
     fetchTodo() {
       this.$http.get("http://127.0.0.1:3000/").then((response) => {
-        this.todos = response.data.sort((a, b) => (a.priority < b.priority) ? 1 : -1)
-        // let defcon5 = this.todos.filter(todo => todo.priority === "Defcon &#8548;");
-        // let defcon4 = this.todos.filter(todo => todo.priority === "Defcon &#8547;");
-        // let defcon3 = this.todos.filter(todo => todo.priority === "Defcon &#8546;");
-        // let defcon2 = this.todos.filter(todo => todo.priority === "Defcon &#8545;");
-        // let defcon1 = this.todos.filter(todo => todo.priority === "Defcon &#8544;");
-          console.log("THIS IS IT!!!!", this.todos.sort((a, b) => (a.priority < b.priority) ? 1 : -1))
-        // console.log("defcon5:", defcon5);
-        // console.log("defcon4:", defcon4);
-        // console.log("defcon3:", defcon3);
-        // console.log("defcon2:", defcon2);
-        // console.log("defcon1:", defcon1);
-        
-        
+        this.todos = response.data.sort((a, b) =>
+          a.priority < b.priority ? 1 : -1
+        );
       });
     },
 
-    // sortTodos(todos) {
-    //     return todos.sort((a, b) => (a.priority < b.priority) ? 1 : -1)
-    // },
-    // sortTodos(todos) {
-    //   return todos.filter(function(todo) {
-    //     if(todo.priority == "Defcon &#8548;")
-    //     return todo;
-    //     if(todo.priority == "Defcon &#8547;")
-    //     return todo;
-    //     if(todo.priority == "Defcon &#8546;")
-    //     return todo;
-    //     if(todo.priority == "Defcon &#8545;")
-    //     return todo;
-    //     if(todo.priority == "Defcon &#8544;")
-    //     return todo;
-        
-        
-    //   })
-    // },
-    
+    sortByHiPriority() {
+      return this.todos.sort((a, b) =>
+          a.priority < b.priority ? 1 : -1
+      )},
 
+    sortByLoPriority() {
+      return this.todos.sort((a, b) =>
+          a.priority < b.priority ? -1 : 1
+      )},
+
+
+    sortByAToZ() {
+      return this.todos.sort((a, b) =>
+          a.name < b.name ? -1 : 1
+        );
+    },
+
+    sortByZToA() {
+      return this.todos.sort((a, b) =>
+          a.name < b.name ? 1 : -1
+        );
+    },
+
+    
     updateTodo(todo) {
       let id = todo._id;
       this.$http
