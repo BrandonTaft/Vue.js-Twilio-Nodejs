@@ -10,7 +10,6 @@ class AppointmentRepository {
   create(name) {
     const newAppointment = { name, done: false };
     const Appointment = new this.model(newAppointment);
-
     return Appointment.save();
   }
 

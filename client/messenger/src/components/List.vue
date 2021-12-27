@@ -3,7 +3,7 @@
     <h1 class="title">Checklist</h1>
 
     <button
-      class="refresh-btn animate"
+      class="refresh-btn reAnimate"
       title="Refresh List"
       v-on:click="refreshTodo()"
     >
@@ -11,39 +11,40 @@
     </button>
 
     <button
-      class="refresh-btn animate"
+      id="clear"
+      class="refresh-btn reAnimate"
       title="Erase Marks"
       v-on:click="clearMarks()"
     >
       Clear Marks
     </button>
 
-    <div class="dropdown">
-      <span>Sort By:</span>
+    <div class="dropdown refresh-Btn">
+      <span>Sort By</span>
       <div class="dropdown-content">
         <button
-          class="refresh-btn animate"
+          class="refresh-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByHiPriority()"
         >
           Priority (Hi - Lo)
         </button>
         <button
-          class="refresh-btn animate"
+          class="refresh-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByLoPriority()"
         >
           Priority (Lo - Hi)
         </button>
         <button
-          class="refresh-btn animate"
+          class="refresh-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByAToZ()"
         >
           Name (A-Z)
         </button>
         <button
-          class="refresh-btn animate"
+          class="refresh-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByZToA()"
         >
@@ -78,10 +79,17 @@
           />
           <span class="update-text">Update Reminder</span>
         </label>
-      <div class="dropdown">
-        <span>Clock Icon</span>
-        <div class="dropdown-content">
-          {{todo.notification}}
+        <div class="notification">
+          <span class="clock"><img src="../assets/clock.png" alt="" /></span>
+          <div 
+          v-if="moment(todo.notification,'HH').format('HH:mm') == 'Invalid date'"
+          class="notification-content">
+            <span>No Notification Set</span>
+          </div>
+          <div 
+          v-else
+          class="notification-content">
+            <span>{{ moment(todo.notification,'HH').format('HH:mm') }}</span>
           </div>
         </div>
         <label for="priority"></label>
@@ -132,6 +140,8 @@
 // eslint-disable-next-line no-unused-vars
 import axios from "axios";
 import bus from "../bus.js";
+import "animate.css";
+
 
 export default {
   data() {
@@ -158,6 +168,7 @@ export default {
   methods: {
     fetchTodo() {
       this.$http.get("http://127.0.0.1:3000/").then((response) => {
+        // this.todos.notification = moment(this.todos.notification,'HH').format('HH:mm');
         this.todos = response.data.sort((a, b) =>
           a.priority < b.priority ? 1 : -1
         );
@@ -165,29 +176,21 @@ export default {
     },
 
     sortByHiPriority() {
-      return this.todos.sort((a, b) =>
-          a.priority < b.priority ? 1 : -1
-      )},
+      return this.todos.sort((a, b) => (a.priority < b.priority ? 1 : -1));
+    },
 
     sortByLoPriority() {
-      return this.todos.sort((a, b) =>
-          a.priority < b.priority ? -1 : 1
-      )},
-
+      return this.todos.sort((a, b) => (a.priority < b.priority ? -1 : 1));
+    },
 
     sortByAToZ() {
-      return this.todos.sort((a, b) =>
-          a.name < b.name ? -1 : 1
-        );
+      return this.todos.sort((a, b) => (a.name < b.name ? -1 : 1));
     },
 
     sortByZToA() {
-      return this.todos.sort((a, b) =>
-          a.name < b.name ? 1 : -1
-        );
+      return this.todos.sort((a, b) => (a.name < b.name ? 1 : -1));
     },
 
-    
     updateTodo(todo) {
       let id = todo._id;
       this.$http
