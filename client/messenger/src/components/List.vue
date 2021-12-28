@@ -23,28 +23,28 @@
       <span>Sort By</span>
       <div class="dropdown-content">
         <button
-          class="refresh-btn reAnimate"
+          class="sort-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByHiPriority()"
         >
           Priority (Hi - Lo)
         </button>
         <button
-          class="refresh-btn reAnimate"
+          class="sort-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByLoPriority()"
         >
           Priority (Lo - Hi)
         </button>
         <button
-          class="refresh-btn reAnimate"
+          class="sort-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByAToZ()"
         >
           Name (A-Z)
         </button>
         <button
-          class="refresh-btn reAnimate"
+          class="sort-btn reAnimate"
           title="Sort Reminders"
           v-on:click="sortByZToA()"
         >
