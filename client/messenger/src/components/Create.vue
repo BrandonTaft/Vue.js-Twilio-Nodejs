@@ -1,19 +1,18 @@
 <template>
   <div class="back-container">
     <h2 class="back-title">Create Reminder</h2>
-   
-    <form  @submit.prevent="addTodo">
+
+    <form @submit.prevent="addTodo">
       <div class="input-container">
         <input
           type="text"
           placeholder=""
           class="form-control"
-          @keypress="typing=true"
+          @keypress="typing = true"
           required
           v-model="name"
-          
         />
-        <label >Title</label>
+        <label>Title</label>
       </div>
       <br />
       <div class="input-container2">
@@ -21,25 +20,19 @@
           type="time"
           placeholder=""
           class="form-control"
-          @keypress="typing=true"
-          
+          @keypress="typing = true"
           v-model="notification"
-          
         />
-        <label >Set Reminder</label>
-       
+        <label>Set Reminder</label>
       </div>
-      <button type="submit" class="btn " >
-                <span
-                  role="status"
-                  aria-hidden="true"
-                ></span>Submit
-              </button>    
+      <button type="submit" class="btn">
+        <span role="status" aria-hidden="true"></span>Submit
+      </button>
     </form>
   </div>
 </template>
 <script>
- // eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
 import axios from "axios";
 import bus from "../bus.js";
 
@@ -48,7 +41,7 @@ export default {
     return {
       name: "",
       notification: "",
-      typing: false
+      typing: false,
     };
   },
   methods: {
@@ -57,32 +50,31 @@ export default {
       let todo = {
         name: this.name,
         notification: this.notification,
-        done: false //false by default
+        done: false, //false by default
       };
       console.log(todo);
       this.$http
         .post("http://127.0.0.1:3000/", todo)
         // eslint-disable-next-line no-unused-vars
-        .then(response => {
+        .then((response) => {
           this.clearTodo();
           this.refreshTodo();
           this.typing = false;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
 
     clearTodo() {
       this.name = "";
-      this.notification = "" ;
+      this.notification = "";
     },
 
     refreshTodo() {
       bus.$emit("refreshTodo");
     },
-    
-  }
+  },
 };
 </script>
 <style >

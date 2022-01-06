@@ -81,15 +81,18 @@
         </label>
         <div class="notification">
           <span class="clock"><img src="../assets/clock.png" alt="" /></span>
-          <div 
-          v-if="moment(todo.notification,'HH').format('HH:mm') == 'Invalid date'"
-          class="notification-content">
-            <span>No Notification Set</span>
+          <div
+            v-if="
+              moment(todo.notification, 'HH:mm').format('HH:mm') == 'Invalid date'
+            "
+            class="notification-content"
+          >
+            <span id="">
+      No Notification Set
+        </span>
           </div>
-          <div 
-          v-else
-          class="notification-content">
-            <span>{{ moment(todo.notification,'HH').format('HH:mm') }}</span>
+          <div v-else class="notification-content">
+            <span>{{ moment(todo.notification, "HH:mm").format("HH:mm") }}</span>
           </div>
         </div>
         <label for="priority"></label>
@@ -117,6 +120,15 @@
             Defcon &#8544;
           </option>
         </select>
+        <span>
+        <input
+          type="time"
+          
+          v-model="todo.notification"
+          @keyup.enter="updateTodo(todo)"
+        />
+        <label>Set Reminder</label>
+        </span>
         <button
           class="action-button animate red"
           title="Delete Reminder?"
@@ -141,7 +153,6 @@
 import axios from "axios";
 import bus from "../bus.js";
 import "animate.css";
-
 
 export default {
   data() {
@@ -214,6 +225,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    displayReminder(){
+      var x = this.getElementById("setReminder");
+      x.classList.toggle("showReminder")
     },
 
     clearMarks() {

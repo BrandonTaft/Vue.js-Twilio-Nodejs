@@ -1,9 +1,5 @@
 <template>
-  
-    
-      <List></List>
-    
-  
+  <List></List>
 </template>
 
 <script>

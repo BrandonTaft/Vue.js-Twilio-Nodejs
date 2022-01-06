@@ -25,9 +25,9 @@
       <button type="submit" class="btn">
         <span
           v-if="loading"
-                  class="spinner-grow spinner-grow-sm"
-                  role="status"
-                  aria-hidden="true"
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="true"
         ></span
         >Send
       </button>
@@ -67,7 +67,7 @@ export default {
     },
     clearTodo() {
       this.message.to = "";
-      this.message.message = "" ;
+      this.message.message = "";
     },
   },
 };
