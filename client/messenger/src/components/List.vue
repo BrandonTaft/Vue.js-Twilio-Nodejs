@@ -120,7 +120,7 @@
             Defcon &#8544;
           </option>
         </select>
-        <span>
+        <!-- <span>
         <input
           type="time"
           
@@ -128,7 +128,7 @@
           @keyup.enter="updateTodo(todo)"
         />
         <label>Set Reminder</label>
-        </span>
+        </span> -->
         <button
           class="action-button animate red"
           title="Delete Reminder?"

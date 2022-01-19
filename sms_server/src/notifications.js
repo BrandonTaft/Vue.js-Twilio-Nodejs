@@ -7,12 +7,13 @@ const client = require("twilio")(process.env.TWILIO_ACCOUNT_SID, process.env.TWI
 
 async function checkForNotifications() {
     const time = new Date();
-    const currentHour = time.getHours();
+    const currentHour = time.getHours() + ":" + time.getMinutes();
     const appointmentsDue = await Appointment.find({
 
         notification: currentHour
 
     })
+    console.log("current Hour", currentHour)
     console.log("Sending", appointmentsDue.length, "Notifications")
     for (var notification of appointmentsDue) {
         sendNotification(notification)

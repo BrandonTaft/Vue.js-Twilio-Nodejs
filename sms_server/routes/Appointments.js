@@ -46,10 +46,9 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
     const name = req.body.name;
     const notification = req.body.notification;
-    const time = moment(req.body.time, 'YYYY-MM-DD hh:mma');
     const appointment = new Appointment({
         name: name,
-        notification: parseInt(notification)
+        notification: notification,
     })
 
     appointment.save().then(function () {
@@ -63,7 +62,7 @@ router.post('/', function (req, res, next) {
 
 router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const reminder = { name: req.body.name, done: req.body.done };
+    const reminder = { name: req.body.name, done: req.body.done, notification:req.body.notification};
     repository.updateById(id, reminder)
         .then(res.status(200).json([]))
         .catch((error) => console.log(error));
@@ -178,6 +177,7 @@ router.post('/sms', (req, res) => {
                 twiml.message(message);
                 res.writeHead(200, { 'Content-Type': 'text/xml' });
                 res.end(twiml.toString())
+                session_destroy();
             }).catch((error) => console.log(error));
         } else {
             //Creates a session to track number of texts from user

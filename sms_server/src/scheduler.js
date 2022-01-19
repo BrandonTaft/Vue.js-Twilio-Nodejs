@@ -7,8 +7,8 @@ const notifications = require('./notifications');
  
 function start() {
   new CronJob(
-     '0 * * * *', // run every hour
-    //'00 * * * * *', // test - run every minute
+     //'0 * * * *', // run every hour
+    '00 * * * * *', // test - run every minute
     () => {
       const time = new Date();
       const currentTime = time.getHours();

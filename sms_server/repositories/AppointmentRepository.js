@@ -39,7 +39,7 @@ updateAll() {
   //find Reminder by id and update it
   updateById(id, object) {
     const query = { _id: id };
-    return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done, notification: object.notification } });
+    return console.log("this it",object.notification) , this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done, notification: object.notification } });
   }
 
   //find Reminder by id and update priority
