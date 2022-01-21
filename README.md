@@ -1,41 +1,53 @@
-<h2 align='center'> Reminder App Built With &nbsp Vue.js, &nbsp Node.js  &nbspand &nbsp Twilio's SMS API</h2>
+<h1 align="center">NOTIFY</h1>
 
-<p align='center'>This app lets users create a dynamic checklist that will notify you about specific tasks at any given time. Once a task is added to the list it is stored in a database and can be marked as done, deleted or edited with a click of a button. It integrates with Twilio to send a notification text at a preset time. Node-Cron is utilized to run a scheduled background function to check for any notifications that are due, then sends them to the specified phone number.
-   Twilio Programmable SMS also allows the user to send in a notification through text message when away from their desk.  It also allows the user to send and recieve text messages when away from their phone.
-  </p>
-  <h1></h1>
+<p align="center">Notify lets users create a dynamic checklist that will notify you about specific
+                                        tasks at any given time.
+                                        Twilio Programmable SMS allows users to add, delete, and update tasks through
+                                        the sms chatbot as easy as you can within the app.
+                                        Once a task is added, it's stored in a database and can then be marked as done,
+                                        deleted or edited. 
+                                        Node-Cron is utilized to run a scheduled function every minute to check for
+                                        notifications that are due, then integrates with Twilio
+                                        to send a notification text to the phone number that is specified on the task.
+                                        So regardless of your location, you'll never miss
+                                        a reminder. There's also a convenient messaging feature built right in to the
+                                        app. So no phone, no problem, you can easily
+                                        send and recieve texts without ever leaving the app.</p>
+
+<br></br>
+ 
 
 
    
 <div align='center'>
-  <h3>Built With</h3>
+  <h1>Built With</h1>
   <h3 align="center">Animate &nbsp;Axios&nbsp; Bootstrap &nbsp;Sweetalert&nbsp; Vue.js&nbsp; Node-Cron&nbsp; Express&nbsp; MongoDB&nbsp; Twilio&nbsp; Node.js</h3>
    <br></br>
   
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/javascript-original.svg" />
+  <img  width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/javascript-original.svg" />
   </a>  &nbsp;&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/bootstrap-original.svg" />
+  <img  width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/bootstrap-original.svg" />
   </a>&nbsp;&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/css3-original.svg" />
+  <img  width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/css3-original.svg" />
   </a>&nbsp;&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/html5-original.svg"     />
+  <img width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/html5-original.svg"     />
   </a>&nbsp;&nbsp;&nbsp;
   <br></br>
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/nodejs-original.svg" />
+  <img width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/nodejs-original.svg" />
   </a>&nbsp;&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/mongo.png" />
+  <img  width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/mongo.png" />
   </a>
    <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/Vue.png" />
+  <img  width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/Vue.png" />
   </a>&nbsp;&nbsp;&nbsp;
   <a href="https://www.linkedin.com/in/brandonmtaft">
-  <img  width="60" height="60" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/twilio.png" />
+  <img  width="80" height="80" src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/twilio.png" />
   </a>&nbsp;&nbsp;&nbsp;
   </div>
   
@@ -82,16 +94,26 @@ https://user-images.githubusercontent.com/86688411/146044177-6449f9c5-f3b8-442a-
 <br />
 <br />
 
-<h3>Send and Recieve text messages with a Twilio number and avoid giving out your personal number</h3>
+<h3>Use the Chat-Bot to add items through sms and sort by priority</h3>
 <h1></h1>
 
 
 
+https://user-images.githubusercontent.com/86688411/150444829-646eaab7-38e7-4810-90c2-61fbcfd41efd.mp4
+
+<br />
+<br />
+
+<h3>The Bot will also update and delete items for you</h3>
+<h1></h1>
+
+https://user-images.githubusercontent.com/86688411/150445260-e73c0fc6-0567-40cc-813e-c7ec2ed09233.mp4
 
 
 
 
-https://user-images.githubusercontent.com/86688411/146045435-9967e5d8-5dfb-4df8-9e0a-5494dd84d40c.mp4
+
+
 
 <br />
 <br />
