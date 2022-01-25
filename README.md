@@ -10,7 +10,7 @@
                                         notifications that are due, then integrates with Twilio
                                         to send a notification text to the phone number that is specified on the task.
                                         So regardless of your location, you'll never miss
-                                        a reminder. There's also a convenient messaging feature built right in to the
+                                        a reminder. There's also a convenient messaging feature built right into the
                                         app. So no phone, no problem, you can easily
                                         send and recieve texts without ever leaving the app.</p>
 
