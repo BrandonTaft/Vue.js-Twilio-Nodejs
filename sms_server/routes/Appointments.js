@@ -1,20 +1,20 @@
 'use strict';
 const express = require('express');
 const session = require('express-session');
+const { Vonage } = require('@vonage/server-sdk')
 const moment = require('moment');
 const Appointment = require('../models/Appointment');
 const repository = require('../repositories/AppointmentRepository');
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser")
-const client = require("twilio")(accountSid, authToken);
-const twimlGenerator = require('../lib/twiml-generator');
 const finder = require('../lib/finder')
 require('dotenv').config()
-/* eslint-disable new-cap */
+
+const vonage = new Vonage({
+    apiKey: "2cb606e4",
+    apiSecret: "q7uMAqANqgJCSUtC"
+})
+
 
 
 //********************* Middleware *********************//
@@ -62,7 +62,7 @@ router.post('/', function (req, res, next) {
 
 router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const reminder = { name: req.body.name, done: req.body.done, notification:req.body.notification};
+    const reminder = { name: req.body.name, done: req.body.done, notification: req.body.notification };
     repository.updateById(id, reminder)
         .then(res.status(200).json([]))
         .catch((error) => console.log(error));
@@ -107,16 +107,22 @@ router.delete('/:id', (req, res) => {
 
 router.post("/send-message", async (req, res) => {
     try {
-        let response = await client.messages.create({
-            body: req.body.message,
-            from: phoneNumber,
-            to: req.body.to
-        })
+        const from = "15713968152"
+        const to = "+17706346786"
+        const text = req.body.message
+
+        async function sendSMS() {
+            await vonage.sms.send({ to, from, text })
+                .then(resp => { console.log('Message sent successfully'); console.log(resp); })
+                .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+        }
+
+        sendSMS();
 
         res.status(200).json({
-            response: response,
-            message: `Message Sent To ${req.body.to}`
-        })
+                        message: `Message Sent To ${req.body.to}`
+                    })
+
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -125,88 +131,105 @@ router.post("/send-message", async (req, res) => {
     }
 })
 
+router.get("/sms", async (req, res) => {
+    console.log("test", req.query)
+    async function sendSMS() {
+        const from = "15713968152"
+        const to = "+17706346786"
+        const text = "okie dokie"
+        await vonage.sms.send({ to, from, text })
+            .then(resp => { console.log('Message sent successfully'); console.log(res); })
+            .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+    }
+
+    sendSMS();
+    res.status(200).json({
+        message: `Message Sent To ${req.body.to}`
+    })
+})
+
 
 //******* Recieve Message And Send Auto Response ********//
 
-router.post('/sms', (req, res) => {
-    try {
-        var body = req.body.Body;
-        if (req.session.update !== undefined && !isNaN(body)) {
-            const id = req.session.update;
-            const name = req.session.nameToBeUpdated;
-            if (body == 1) {
-                repository.deleteById(id).then((ok) => {
-                    console.log(`Deleted record with id: ${id}`);
-                    const message = `${name} has been deleted.`
-                    const twiml = new MessagingResponse();
-                    twiml.message(message);
-                    res.writeHead(200, { 'Content-Type': 'text/xml' });
-                    res.end(twiml.toString())
-                }).catch((error) => console.log(error));
-            } else if (body == 2) {
-                const reminder = { done: true };
-                repository.updateById(id, reminder).then(() => {
-                    const message = `${name} was marked as complete.`
-                    const twiml = new MessagingResponse();
-                    twiml.message(message);
-                    res.writeHead(200, { 'Content-Type': 'text/xml' });
-                    res.end(twiml.toString())
-                }).catch((error) => console.log(error));
-            } else if (body == 3) {
-                req.session.update = undefined
-                req.session.notify = true
-                const message = "When should I Remind you?"
-                const twiml = new MessagingResponse();
-                twiml.message(message);
-                res.writeHead(200, { 'Content-Type': 'text/xml' });
-                res.end(twiml.toString())
-            } else {
-                const message = "Must choose between 1 and 3 "
-                const twiml = new MessagingResponse();
-                twiml.message(message);
-                res.writeHead(200, { 'Content-Type': 'text/xml' });
-                res.end(twiml.toString())
-            }
-        } else if (req.session.notify == true) {
-            const reminder = { name: req.session.nameToBeUpdated, notification: body };
-            var due = moment(reminder.notification,'HH').format('HH:mm');
-            repository.updateByName(req.session.nameToBeUpdated, reminder)
-            .then(() => {
-                const message = `Ok, I will notify you at ${due} `
-                const twiml = new MessagingResponse();
-                twiml.message(message);
-                res.writeHead(200, { 'Content-Type': 'text/xml' });
-                res.end(twiml.toString())
-                session_destroy();
-            }).catch((error) => console.log(error));
-        } else {
-            //Creates a session to track number of texts from user
-            //Sets the reply message depending on how many times user has texted
-            const smsCount = req.session.counter || 0;
-            let message = `Hello, I've added **${body}** to the list for you!`;
-            if (smsCount > 0) {
-                message = `Welcome Back! I've added **${body}** to the list for you!`;
-            }
-            req.session.counter = smsCount + 1;
+// router.post('/sms', (req, res) => {
+//     try {
+//         var body = req.body.Body;
+//         if (req.session.update !== undefined && !isNaN(body)) {
+//             const id = req.session.update;
+//             const name = req.session.nameToBeUpdated;
+//             if (body == 1) {
+//                 repository.deleteById(id).then((ok) => {
+//                     console.log(`Deleted record with id: ${id}`);
+//                     const message = `${name} has been deleted.`
+//                     const twiml = new MessagingResponse();
+//                     twiml.message(message);
+//                     res.writeHead(200, { 'Content-Type': 'text/xml' });
+//                     res.end(twiml.toString())
+//                 }).catch((error) => console.log(error));
+//             } else if (body == 2) {
+//                 const reminder = { done: true };
+//                 repository.updateById(id, reminder).then(() => {
+//                     const message = `${name} was marked as complete.`
+//                     const twiml = new MessagingResponse();
+//                     twiml.message(message);
+//                     res.writeHead(200, { 'Content-Type': 'text/xml' });
+//                     res.end(twiml.toString())
+//                 }).catch((error) => console.log(error));
+//             } else if (body == 3) {
+//                 req.session.update = undefined
+//                 req.session.notify = true
+//                 const message = "When should I Remind you?"
+//                 const twiml = new MessagingResponse();
+//                 twiml.message(message);
+//                 res.writeHead(200, { 'Content-Type': 'text/xml' });
+//                 res.end(twiml.toString())
+//             } else {
+//                 const message = "Must choose between 1 and 3 "
+//                 const twiml = new MessagingResponse();
+//                 twiml.message(message);
+//                 res.writeHead(200, { 'Content-Type': 'text/xml' });
+//                 res.end(twiml.toString())
+//             }
+//         } else if (req.session.notify == true) {
+//             const reminder = { name: req.session.nameToBeUpdated, notification: body };
+//             var due = moment(reminder.notification,'HH').format('HH:mm');
+//             repository.updateByName(req.session.nameToBeUpdated, reminder)
+//             .then(() => {
+//                 const message = `Ok, I will notify you at ${due} `
+//                 const twiml = new MessagingResponse();
+//                 twiml.message(message);
+//                 res.writeHead(200, { 'Content-Type': 'text/xml' });
+//                 res.end(twiml.toString())
+//                 session_destroy();
+//             }).catch((error) => console.log(error));
+//         } else {
+//             //Creates a session to track number of texts from user
+//             //Sets the reply message depending on how many times user has texted
+//             const smsCount = req.session.counter || 0;
+//             let message = `Hello, I've added **${body}** to the list for you!`;
+//             if (smsCount > 0) {
+//                 message = `Welcome Back! I've added **${body}** to the list for you!`;
+//             }
+//             req.session.counter = smsCount + 1;
 
-            finder.findByName(body, function (err, reminders) {
-                if (reminders.length === 0) {
-                    twimlGenerator.notFound(body)
-                    const twiml = new MessagingResponse();
-                    twiml.message(message);
-                    res.writeHead(200, { 'Content-Type': 'text/xml' });
-                    res.end(twiml.toString())
-                } else {
-                    let update = reminders[0]._id;
-                    let nameToBeUpdated = reminders[0].name;
-                    req.session.update = update;
-                    req.session.nameToBeUpdated = nameToBeUpdated;
-                    res.send(twimlGenerator.singleReminder(reminders[0]).toString());
-                }
+//             finder.findByName(body, function (err, reminders) {
+//                 if (reminders.length === 0) {
+//                     twimlGenerator.notFound(body)
+//                     const twiml = new MessagingResponse();
+//                     twiml.message(message);
+//                     res.writeHead(200, { 'Content-Type': 'text/xml' });
+//                     res.end(twiml.toString())
+//                 } else {
+//                     let update = reminders[0]._id;
+//                     let nameToBeUpdated = reminders[0].name;
+//                     req.session.update = update;
+//                     req.session.nameToBeUpdated = nameToBeUpdated;
+//                     res.send(twimlGenerator.singleReminder(reminders[0]).toString());
+//                 }
 
-            })
-        }
-    } catch (error) { console.log(error) };
-})
+//             })
+//         }
+//     } catch (error) { console.log(error) };
+// })
 
 module.exports = router;
