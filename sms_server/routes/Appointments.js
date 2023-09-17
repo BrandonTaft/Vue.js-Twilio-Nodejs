@@ -44,16 +44,14 @@ router.get('/', function (req, res, next) {
 //************* Add Items To The Database **************//
 
 router.post('/', function (req, res, next) {
-    const name = req.body.name;
-    const notification = req.body.notification;
     const appointment = new Appointment({
-        name: name,
-        notification: notification,
+        name: req.body.name,
+        notification: req.body.notification,
+        priority: req.body.priority
     })
-
     appointment.save().then(function () {
         res.redirect('/');
-        console.log(appointment);
+        console.log("Appointment was successfully added :", appointment);
     }).catch((error) => console.log(error));
 });
 
@@ -62,7 +60,7 @@ router.post('/', function (req, res, next) {
 
 router.put('/:id', (req, res) => {
     const { id } = req.params;
-    const reminder = { name: req.body.name, done: req.body.done, notification: req.body.notification };
+    const reminder = { name: req.body.name, done: req.body.done, notification: req.body.notification, priority: req.body.priority };
     repository.updateById(id, reminder)
         .then(res.status(200).json([]))
         .catch((error) => console.log(error));
