@@ -2,17 +2,14 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import config from './config';
 import { MyHeader } from './components/GlobalText';
-import { RoundButton } from './components/Buttons';
+
 import Loader from './components/Loader';
 import List from './components/List';
 
-import Create from './components/Create';
-
 
 export default function App() {
-  const [modalVisible, setModalVisible] = useState(false);
+
   const [reminders, setReminders] = useState([]);
-  const [editable, setEditable] = useState({})
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -22,7 +19,6 @@ export default function App() {
     fetch(config.BASE_URL)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         setReminders(data)
       })
       .catch((err) => {
@@ -32,7 +28,7 @@ export default function App() {
         setLoading(false);
       });
   }, [refresh]);
-  
+
   return (
     <View style={styles.bodyContainer}>
 
@@ -41,28 +37,11 @@ export default function App() {
       </View>
 
       <View style={styles.midContainer} >
-        {loading ? <Loader /> : 
-        <List
-          reminders={reminders}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          setEditable={setEditable} 
-        />}
-      </View>
-
-      <View style={styles.bottomContainer} >
-        <Create
-          onSucess={() => setRefresh(!refresh)}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          editable={editable}
-          setEditable={setEditable}
-        />
-       
-        <RoundButton onPress={() => setRefresh(!refresh)}>
-          <MyHeader>R</MyHeader>
-        </RoundButton>
-       
+        {loading ? <Loader /> :
+          <List
+            reminders={reminders}
+            onSucess={() => setRefresh(!refresh)}
+          />}
       </View>
 
       <StatusBar style="light" />

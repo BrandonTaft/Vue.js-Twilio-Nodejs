@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View, ScrollView, Pressable } from 'react-native';
-import { MyText } from './GlobalText';
+import Create from './Create';
+import { MyText, MyHeader } from './GlobalText';
+import { RoundButton } from '../components/Buttons';
 
-export default function List({ reminders, modalVisible, setModalVisible, setEditable }) {
-    //const [modalVisible, setModalVisible] = useState(false);
-   
+export default function List({ reminders, onSucess }) {
+ const [reminder, setReminder] = useState({});
+ const [modalVisible, setModalVisible] = useState(false);
     return (
+        <>
             <ScrollView>
                 <View style={styles.listContainer}>
                     {reminders.map((reminder) => {
@@ -19,7 +22,7 @@ export default function List({ reminders, modalVisible, setModalVisible, setEdit
                                     }
                                 }
                                 onPress={() => {
-                                    setEditable(reminder)
+                                    setReminder(reminder)
                                     setModalVisible(!modalVisible)
                                 }}
                             >
@@ -28,7 +31,16 @@ export default function List({ reminders, modalVisible, setModalVisible, setEdit
                         );
                     })}
                 </View>
-            </ScrollView>  
+            </ScrollView>
+            <Create onSucess={onSucess} editable={reminder} setEditable={setReminder} setModalVisible={setModalVisible} modalVisible={modalVisible} />
+            <RoundButton onPress={onSucess}>
+          <MyHeader>R</MyHeader>
+        </RoundButton>
+
+        <RoundButton onPress={() => setModalVisible(true)}>
+          <MyHeader style={{ fontWeight: 'bold' }}>+</MyHeader>
+        </RoundButton>
+            </>  
     );
 }
 

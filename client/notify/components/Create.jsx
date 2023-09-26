@@ -116,11 +116,11 @@ export default function Create({ onSucess, modalVisible, setModalVisible, editab
           </View>
         </View>
       </Modal>
-      <RoundButton
+      {/* <RoundButton
         onPress={() => setModalVisible(true)}
       >
         <MyHeader style={{ fontWeight: 'bold' }}>+</MyHeader>
-      </RoundButton>
+      </RoundButton> */}
     </View>
   );
 };
