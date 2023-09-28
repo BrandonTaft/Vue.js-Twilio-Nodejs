@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const { Vonage } = require('@vonage/server-sdk')
 const moment = require('moment');
+var momentDurationFormatSetup = require("moment-duration-format");
 const Appointment = require('../models/Appointment');
 const repository = require('../repositories/AppointmentRepository');
 const bodyParser = require("body-parser");
@@ -15,8 +16,10 @@ const vonage = new Vonage({
     apiSecret: "q7uMAqANqgJCSUtC"
 })
 
-
-
+let date = '2023-09-29T23:12:00.000Z';
+let dur = moment.duration( moment(date.toLocaleString().replace('.000Z', '')).diff(moment()) );
+console.log( dur.format() );
+console.log( dur.format('minutes') );
 //********************* Middleware *********************//
 const router = express.Router();
 router.use(bodyParser.urlencoded({
@@ -51,7 +54,7 @@ router.post('/', function (req, res, next) {
         done: false
     })
     appointment.save().then(function () {
-        res.json({ success: true })
+        res.status(200).json({ success: true })
         console.log("Appointment was successfully added :", appointment);
     }).catch((error) => console.log(error));
 });
@@ -62,10 +65,9 @@ router.post('/', function (req, res, next) {
 router.put('/', (req, res) => {
     console.log(req.body)
     const id = req.body.id;
-    const reminder = { name: req.body.name, done: req.body.done, notification: Number(req.body.notification), priority: req.body.priority };
+    const reminder = { name: req.body.name, done: req.body.done, notification: req.body.notification, priority: req.body.priority };
     repository.updateById(id, reminder)
-        //.then(res.status(200).json([]))
-        .then( res.json({ success: true }))
+        .then(res.status(200).json({ success: true }))
         .catch((error) => console.log(error));
 });
 
@@ -76,7 +78,7 @@ router.put('/', (req, res) => {
 //     const { id } = req.params;
 //     const reminder = { priority: req.body.priority };
 //     repository.setPriority(id, reminder)
-//         .then(res.status(200).json([]))
+//         .then(res.status(200).json({ success: true }))
 //         .catch((error) => console.log(error));
 // });
 
@@ -87,7 +89,7 @@ router.put('/', (req, res) => {
 router.put('/', (req, res) => {
     const reminder = { done: false };
     repository.updateAll()
-        .then(res.status(200).json([]))
+        .then(res.status(200).json({ success: true }))
         .catch((error) => console.log(error));
 });
 
@@ -96,11 +98,9 @@ router.put('/', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
-    repository.deleteById(id).then((ok) => {
-        console.log(ok);
+    repository.deleteById(id).then(() => {
         console.log(`Deleted record with id: ${id}`);
-        res.json({ success: true })
-        //res.status(200).json([]);
+        res.status(200).json({ success: true })
     }).catch((error) => console.log(error));
 });
 

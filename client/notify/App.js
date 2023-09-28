@@ -1,33 +1,13 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
-import config from './config';
 import { MyHeader } from './components/GlobalText';
-
 import Loader from './components/Loader';
 import List from './components/List';
-
+import useFetch from './components/useFetch';
 
 export default function App() {
 
-  const [reminders, setReminders] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(config.BASE_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setReminders(data)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [refresh]);
+  const { isLoading, reminders, setRefresh, refresh } = useFetch();
 
   return (
     <View style={styles.bodyContainer}>
@@ -37,7 +17,7 @@ export default function App() {
       </View>
 
       <View style={styles.midContainer} >
-        {loading ? <Loader /> :
+        {isLoading ? <Loader /> :
           <List
             reminders={reminders}
             onSucess={() => setRefresh(!refresh)}
@@ -68,20 +48,6 @@ const styles = StyleSheet.create({
   },
   midContainer: {
     flex: 4,
-    backgroundColor: '#121212',
-    marginTop: 16,
-    marginBottom: 16,
-    borderRadius: 20,
-    padding: 14,
-    width: '100%'
-  },
-  bottomContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    borderRadius: 20,
-    backgroundColor: '#121212',
     width: '100%'
   }
 });

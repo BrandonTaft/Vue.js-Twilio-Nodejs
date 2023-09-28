@@ -2,20 +2,60 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, View, Modal, Alert } from 'react-native';
 import { RoundButton, SquareButton } from './Buttons';
 import { MyText, MyHeader } from './GlobalText';
-import config from '../config';;
+import config from '../config';
+// import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-export default function Create({ onSucess, modalVisible, setModalVisible, editable, setEditable }) {
+
+//DateTimePickerAndroid.dismiss(mode: AndroidNativeProps['mode'])
+
+export default function Create({
+  onSucess,
+  modalVisible,
+  setModalVisible,
+  editable,
+  setEditable
+}) {
   const [name, onChangeName] = useState("");
-  const [notification, onChangeNotification] = useState("");
-  const [action, setAction] = useState('POST')
+  const [notification, onChangeNotification] = useState("09-10-2020");
+  const [action, setAction] = useState('POST');
+
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
+
+
+
   useEffect(() => {
-    console.log("TEST", editable)
-    if(editable.name) {
+    if (editable.name) {
       onChangeName(editable.name)
       setAction('PUT')
     }
   }, [editable])
-  console.log("TEST", editable)
+
+  const showDatePicker = () => {
+    setDatePickerVisible(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisible(false);
+  };
+
+  const handleConfirm = (date) => {
+    setSelectedDate(date.toLocaleString());
+    hideDatePicker();
+  };
+
+
+  const resetState = () => {
+    onSucess()
+    onChangeName("")
+    onChangeNotification("")
+    setAction('POST')
+    setEditable({})
+    setModalVisible(!modalVisible)
+  }
+
   const postReminder = () => {
     try {
       fetch(config.BASE_URL, {
@@ -27,17 +67,12 @@ export default function Create({ onSucess, modalVisible, setModalVisible, editab
         body: JSON.stringify({
           id: editable._id,
           name: name,
-          notification: notification
+          notification: selectedDate
         })
       }).then(response => response.json())
         .then(result => {
           if (result.success) {
-            setModalVisible(!modalVisible)
-            onSucess()
-            onChangeName("")
-            onChangeNotification("")
-            setAction('POST')
-            setEditable({})
+            resetState()
           }
         })
     } catch (e) {
@@ -46,21 +81,15 @@ export default function Create({ onSucess, modalVisible, setModalVisible, editab
   }
 
   const handleDeleteReminder = () => {
-    console.log(editable, config.BASE_URL + '/' + editable._id)
     fetch(config.BASE_URL + '/' + editable._id, {
-        method: 'DELETE'
+      method: 'DELETE'
     }).then(response => response.json())
-        .then(result => {
-            if (result.success) {
-              setModalVisible(!modalVisible)
-              onSucess()
-              onChangeName("")
-              onChangeNotification("")
-              setAction('POST')
-              setEditable({})
-            }
-        })
-}
+      .then(result => {
+        if (result.success) {
+          resetState()
+        }
+      })
+  }
 
 
   return (
@@ -76,7 +105,7 @@ export default function Create({ onSucess, modalVisible, setModalVisible, editab
           <View style={styles.modalView}>
 
             <TextInput
-            autoFocus={true}
+              autoFocus={true}
               multiline={true}
               numberOfLines={10}
               placeholderTextColor="#fff"
@@ -85,14 +114,18 @@ export default function Create({ onSucess, modalVisible, setModalVisible, editab
               value={name}
               placeholder="memo"
             />
-            <TextInput
-              placeholderTextColor="#fff"
-              style={styles.input}
-              onChangeText={onChangeNotification}
-              value={notification}
-              placeholder="time"
-              keyboardType="numeric"
+            <SquareButton onPress={showDatePicker} >
+              <MyText style={{ fontWeight: 'bold' }}>ADD TIME</MyText>
+            </SquareButton>
+            <DateTimePickerModal
+              date={new Date()}
+              isVisible={datePickerVisible}
+              mode="datetime"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
             />
+
+           
             <View style={styles.horizontalView}>
               <SquareButton
                 onPress={() => {
@@ -107,20 +140,13 @@ export default function Create({ onSucess, modalVisible, setModalVisible, editab
               >
                 <MyText style={{ fontWeight: 'bold' }}>submit</MyText>
               </SquareButton>
-              <SquareButton
-                onPress={handleDeleteReminder}
-              >
+              <SquareButton onPress={handleDeleteReminder}>
                 <MyText style={{ fontWeight: 'bold' }}>Delete</MyText>
               </SquareButton>
             </View>
           </View>
         </View>
       </Modal>
-      {/* <RoundButton
-        onPress={() => setModalVisible(true)}
-      >
-        <MyHeader style={{ fontWeight: 'bold' }}>+</MyHeader>
-      </RoundButton> */}
     </View>
   );
 };

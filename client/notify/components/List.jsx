@@ -5,10 +5,12 @@ import { MyText, MyHeader } from './GlobalText';
 import { RoundButton } from '../components/Buttons';
 
 export default function List({ reminders, onSucess }) {
- const [reminder, setReminder] = useState({});
- const [modalVisible, setModalVisible] = useState(false);
+    const [reminder, setReminder] = useState({});
+    const [modalVisible, setModalVisible] = useState(false);
+
     return (
         <>
+        <View style={styles.listContainer}>
             <ScrollView>
                 <View style={styles.listContainer}>
                     {reminders.map((reminder) => {
@@ -27,25 +29,46 @@ export default function List({ reminders, onSucess }) {
                                 }}
                             >
                                 <MyText>{reminder.name}</MyText>
+                                <MyText>{reminder.notification}</MyText>
                             </Pressable>
                         );
                     })}
                 </View>
             </ScrollView>
-            <Create onSucess={onSucess} editable={reminder} setEditable={setReminder} setModalVisible={setModalVisible} modalVisible={modalVisible} />
-            <RoundButton onPress={onSucess}>
-          <MyHeader>R</MyHeader>
-        </RoundButton>
-
-        <RoundButton onPress={() => setModalVisible(true)}>
-          <MyHeader style={{ fontWeight: 'bold' }}>+</MyHeader>
-        </RoundButton>
-            </>  
+            <Create
+                onSucess={onSucess}
+                editable={reminder}
+                setEditable={setReminder}
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+            />
+            </View>
+            <View style={styles.bottomContainer}>
+                <RoundButton onPress={() => setModalVisible(true)}>
+                    <MyHeader style={{ fontWeight: 'bold' }}>+</MyHeader>
+                </RoundButton>
+            </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
     listContainer: {
-       
-    }
+        flex: 4,
+        backgroundColor: '#121212',
+        marginTop: 16,
+        marginBottom: 16,
+        borderRadius: 20,
+        padding: 14,
+        width: '100%'
+    },
+    bottomContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        borderRadius: 20,
+        backgroundColor: '#121212',
+        width: '100%',
+      }
 });
